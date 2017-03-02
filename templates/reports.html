@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<title>Hello from Flask</title>
+</head>
+<body>
+<a href="/index">首页</a>
+<a href="/match_item">商品归类</a>
+<a href="/reports">报表</a>
+</br>
+</br>
+
+{% for line in lines %}
+    {{ line }}<br/>
+{% endfor %}
+
+</body>
+</html>
+
+
+
