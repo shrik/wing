@@ -68,9 +68,9 @@ def submit_match():
 
 @app.route('/reports')
 def reports():
-    sql = "select s.id,s.name, s.price/100, sum( if(items.month_sale_num = -1 , 0 , if(items.month_sale_num = null, 0 , items.month_sale_num) ) ) as month_sale_num from `standard_items` s inner join items on items.standard_item_id = s.id group by s.id"
+    sql = "select s.id,s.name, s.specification, s.brand, s.price/100, sum( if(items.month_sale_num = -1 , 0 , if(items.month_sale_num = null, 0 , items.month_sale_num) ) ) as month_sale_num from `standard_items` s inner join items on items.standard_item_id = s.id group by s.id"
     result = db.engine.execute(sql)
-    lines = ["id,name,价格,销量"]
+    lines = ["id,name,规格,品牌,价格,销量"]
 
     def to_str(obj):
         if type(obj) != unicode:
@@ -82,7 +82,7 @@ def reports():
         lines.append(line)
 
     text = StringIO.StringIO()
-    text.write(("\n".join(lines)).encode("utf-8"))
+    text.write(("\n".join(lines)).encode("gbk"))
     text.seek(0)
     return send_file(text, as_attachment=True, attachment_filename= "reports.csv")
     # return render_template("reports.html", lines=lines)
